@@ -1,15 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState,Component  } from 'react';
-import APIKit, {setClientToken} from '../shared/APIKit';
-
+import APIKit, {setClientToken} from '../api/APIKit';
 import { StyleSheet, Text, TextInput, View, Image, Button, Alert} from 'react-native';
-import {globals} from '../styles/globals';
+import {globals} from '../../styles/globals';
 import {axios} from 'axios';
 
 
 class LoginView extends Component {
 	
-	state = { emailEmpty: false,passwordEmpty:false,invalidEmail:false,invalidPassword:false };
+	state = { emailEmpty: false,passwordEmpty:false,invalidEmail:false,invalidPassword:false,responseMessage:null};
 	isValidPassword(str) {
 		
 			if(str.length>=8)
@@ -18,6 +17,7 @@ class LoginView extends Component {
 				return false;
 		
 	}
+	
 	isEmailAddress(str) {
 		
 		var pattern =/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -60,14 +60,19 @@ class LoginView extends Component {
 		if(error==0)
 		{
 			 const payload = {email, password_field};
-			APIKit.post('/', payload)
+			APIKit.post('/authenticate.php', payload)
       .then(this.onSuccess)
       .catch(this.onFailure);
 		}
     }
 	onSuccess = ({data}) => {
-      console.log('success')
-      console.log(data)
+		if(data.success==0) {
+			this.setState({ responseMessage:data.message });
+		}
+		else {
+			alert("Details are valid success.")
+		}
+      
     };
 	onFailure = ({data}) => {
 		 console.log('faliure')
@@ -77,8 +82,10 @@ class LoginView extends Component {
         return (
      <View style={globals.container}>
 	
-            <Image style={globals.logo} source={require('../assets/logo/logo.png')} />
-			
+            <Image style={globals.logo} source={require('../../assets/logo/logo.png')} />
+			  <Text style={globals.errors}>
+			{this.state.responseMessage ? this.state.responseMessage : null} 
+		</Text>
 			<TextInput  onChangeText={(email) => this.setState({email})}   style={globals.inputs}
          placeholder="Email"
        />

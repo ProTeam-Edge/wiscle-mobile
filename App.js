@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState,Component  } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import {globals} from './styles/globals';
-import LoginView from './components/LoginView';
+import LoginView from './components/pages/LoginView';
 export default function App() {
   return (
   <View style={globals.container}>

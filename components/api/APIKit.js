@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // Create axios client, pre-configured with baseURL
 let APIKit = axios.create({
-  baseURL: 'https://wlslab.com/api_check',
+  baseURL: 'https://alct.pro/wp-content/themes/memberlite-child-master/api_handler/',
   timeout: 10000,
 });
 
