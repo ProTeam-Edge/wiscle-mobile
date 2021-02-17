@@ -1,8 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState,Component  } from 'react';
+import APIKit, {setClientToken} from '../shared/APIKit';
 
 import { StyleSheet, Text, TextInput, View, Image, Button, Alert} from 'react-native';
 import {globals} from '../styles/globals';
+import {axios} from 'axios';
 
 
 class LoginView extends Component {
@@ -56,8 +58,21 @@ class LoginView extends Component {
 			this.setState({ passwordEmpty: false });
 		} 
 		if(error==0)
-		alert("All good form can be submitted!!");
+		{
+			 const payload = {email, password_field};
+			APIKit.post('/', payload)
+      .then(this.onSuccess)
+      .catch(this.onFailure);
+		}
     }
+	onSuccess = ({data}) => {
+      console.log('success')
+      console.log(data)
+    };
+	onFailure = ({data}) => {
+		 console.log('faliure')
+      console.log(data)
+    };
   render() {
         return (
      <View style={globals.container}>
