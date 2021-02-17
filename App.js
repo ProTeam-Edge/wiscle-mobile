@@ -7,6 +7,7 @@ export default function App() {
   return (
   <View style={globals.container}>
    <LoginView />
+
   </View>
   );
 }
