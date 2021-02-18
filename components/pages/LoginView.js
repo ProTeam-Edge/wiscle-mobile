@@ -4,11 +4,11 @@ import APIKit, {setClientToken} from '../api/APIKit';
 import { StyleSheet, Text, TextInput, View, Image, Button, Alert} from 'react-native';
 import {globals} from '../../styles/globals';
 import {axios} from 'axios';
-
+import LoadingIndicator from '../../components/misc/LoadingIndicator';
 
 class LoginView extends Component {
 	
-	state = { emailEmpty: false,passwordEmpty:false,invalidEmail:false,invalidPassword:false,responseMessage:null};
+	state = { emailEmpty: false,passwordEmpty:false,invalidEmail:false,invalidPassword:false,responseMessage:null,LoadingIndicatorShow:false,password_field:'',email:''};
 	isValidPassword(str) {
 		
 			if(str.length>=8)
@@ -25,6 +25,7 @@ class LoginView extends Component {
 		
 	}
 	formsubmission = (e) => {
+		
 		let error = 0;
 		let email=this.state.email;
 		let password_field = this.state.password_field;
@@ -34,6 +35,11 @@ class LoginView extends Component {
 			this.setState({ emailEmpty: true });
 		}
 		else {
+			if(email=='') {
+				error = 1;
+				this.setState({ emailEmpty: true });
+			}
+			else {
 			if(this.isEmailAddress(email)==false) {
 				error = 1;
 				this.setState({ invalidEmail: true });
@@ -42,23 +48,32 @@ class LoginView extends Component {
 				this.setState({ invalidEmail: false });
 			}
 			this.setState({ emailEmpty: false });
+			}
 		}
 		if(typeof password_field === "undefined") {
 			error = 1;
 			this.setState({ passwordEmpty: true });
 		}
 		else {
-			if(this.isValidPassword(password_field)==false) {
+			if(password_field=='') {
+				error = 1;
+				this.setState({ passwordEmpty: true });
+			}
+			else {
+				if(this.isValidPassword(password_field)==false) {
 				error = 1;
 				this.setState({ invalidPassword: true });
 			}
 			else {
 				this.setState({ invalidPassword: false });
 			}
-			this.setState({ passwordEmpty: false });
+				this.setState({ passwordEmpty: false });
+			}
+			
 		} 
 		if(error==0)
 		{
+			this.setState({ LoadingIndicatorShow: true });
 			 const payload = {email, password_field};
 			APIKit.post('/authenticate.php', payload)
       .then(this.onSuccess)
@@ -66,34 +81,43 @@ class LoginView extends Component {
 		}
     }
 	onSuccess = ({data}) => {
+		
+		this.setState({ LoadingIndicatorShow: false });
 		if(data.success==0) {
 			this.setState({ responseMessage:data.message });
 		}
 		else {
-			alert("Details are valid success.")
+		this.EmptyFields();
+
+		alert("Success");	
+		this.setState({ responseMessage:data.message });
 		}
       
     };
 	onFailure = ({data}) => {
+		this.EmptyFields();
+		this.setState({ LoadingIndicatorShow: false });
 		 console.log('faliure')
       console.log(data)
     };
-  render() {
-        return (
-     <View style={globals.container}>
+	EmptyFields() {
+		this.setState({ email: '',password_field:'' });	
+	}
+ LoginViewHtml() {
+ return <View style={globals.container}>
 	
             <Image style={globals.logo} source={require('../../assets/logo/logo.png')} />
 			  <Text style={globals.errors}>
 			{this.state.responseMessage ? this.state.responseMessage : null} 
 		</Text>
-			<TextInput  onChangeText={(email) => this.setState({email})}   style={globals.inputs}
+			<TextInput value={this.state.email} onChangeText={(email) => this.setState({email})}   style={globals.inputs}
          placeholder="Email"
        />
 	    <Text style={globals.errors}>
 		{this.state.emailEmpty ? " Email is a required field." : null}
 		{this.state.invalidEmail ? " Email is invalid." : null}
 		</Text>
-     <TextInput secureTextEntry={true} onChangeText={(password_field) => this.setState({password_field})}  style={globals.inputs} 
+     <TextInput  value={this.state.password_field} secureTextEntry={true} onChangeText={(password_field) => this.setState({password_field})}  style={globals.inputs} 
          placeholder="Password"
        />  
 	     <Text style={globals.errors}>
@@ -108,7 +132,14 @@ class LoginView extends Component {
        />
 
   </View>
-  );
+ }
+  render() {
+		    return (
+			this.state.LoadingIndicatorShow ?  <LoadingIndicator /> : this.LoginViewHtml() 
+				);
+		    
+
+  
   }
 }
 export default LoginView;
