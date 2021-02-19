@@ -17,8 +17,10 @@ const globals = StyleSheet.create({
     borderColor: '#ddd',
     borderWidth: 1,
     borderRadius: 5,
-	 alignSelf: 'stretch',
-    textAlign: 'center',
+	
+	 width: '50%',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 10,
     fontSize: 17,
     padding: 10
