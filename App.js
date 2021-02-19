@@ -12,7 +12,7 @@ const Stack = createStackNavigator();
 
 class App extends Component {
 	state = { 
-	initialRouteName: null,
+		initialRouteName: null,
 	};
 	constructor(props) {
 		super(props);
