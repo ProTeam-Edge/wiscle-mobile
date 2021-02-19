@@ -52,7 +52,7 @@ class App extends Component {
 				<Stack.Navigator initialRouteName={initialRouteName}>
 					<Stack.Screen  options={{ headerShown: false }} name="LoginView" component={LoginView} />
 					<Stack.Screen options={{ headerShown: false }} name="HomeView" component={HomeView} />
-					<Stack.Screen options={{ headerShown: false }} name="TextChatView" component={TextChatView} />
+					<Stack.Screen name="TextChatView" component={TextChatView} />
 				</Stack.Navigator>
 			</NavigationContainer>
 			);
