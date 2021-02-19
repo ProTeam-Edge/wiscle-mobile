@@ -54,7 +54,6 @@ class App extends Component {
 		console.log(initialRouteName)
 		 if (initialRouteName !== null) {
 			 return (
-		
 			<NavigationContainer >
 				<Stack.Navigator initialRouteName={initialRouteName}>
 					<Stack.Screen  options={{ headerShown: false }} name="LoginView" component={LoginView} />
@@ -70,7 +69,6 @@ class App extends Component {
 			 return (<View></View>);
 		 }
 	}
-	
 	// Render View
 	render() {
 		return this.mainRender(this.state.initialRouteName);
