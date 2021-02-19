@@ -6,6 +6,8 @@ import {globals} from './styles/globals';
 import LoginView from './components/pages/LoginView';
 import HomeView from './components/pages/HomeView';
 import TextChatView from './components/pages/TextChatView';
+import AudioChatView from './components/pages/AudioChatView';
+import TopicsView from './components/pages/TopicsView';
 import LoadingIndicator from './components/misc/LoadingIndicator';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -41,7 +43,12 @@ class App extends Component {
 	TextChatView () {
 		return  <View><TextChatView /></View>
 	}
-	
+	AudioChatView () {
+		return  <View><AudioChatView /></View>
+	}
+	TopicsView () {
+		return  <View><TopicsView /></View>
+	}
 	// Workaround for initialRoutName Issue
 	mainRender(initialRouteName) {
 		console.log(initialRouteName)
@@ -53,6 +60,8 @@ class App extends Component {
 					<Stack.Screen  options={{ headerShown: false }} name="LoginView" component={LoginView} />
 					<Stack.Screen options={{ headerShown: false }} name="HomeView" component={HomeView} />
 					<Stack.Screen name="TextChatView" component={TextChatView} />
+					<Stack.Screen name="AudioChatView" component={AudioChatView} />
+					<Stack.Screen name="TopicsView" component={TopicsView} />
 				</Stack.Navigator>
 			</NavigationContainer>
 			);

@@ -53,9 +53,17 @@ class HomeView extends Component {
 		})
 	}
 	
+	TopicsRedirect = () => {
+		const { navigate } = this.props.navigation;
+		navigate('TopicsView');
+	}
 	TextChatRedirect = () => {
 		const { navigate } = this.props.navigation;
 		navigate('TextChatView');
+	}
+	AudioChatRedirect = () => {
+		const { navigate } = this.props.navigation;
+		navigate('AudioChatView');
 	}
 	clearSession = () => {
 		console.log('triggered');
@@ -70,8 +78,11 @@ class HomeView extends Component {
 	  <Image style={globals.logo} source={require('../../assets/logo/logo.png')} />
 	   <Image style={globals.userImage} source={require('../../assets/user-male.png')} />
 	    <View style={globals.logOutButton}>
-	   <Button  onPress={this.clearSession}  type="button"title="Logout"/>
+	   <Button onPress={this.clearSession}  type="button"title="Logout"/>
 	   </View>
+	    <View style={globals.logOutButton}>
+		<Button  onPress={this.TopicsRedirect} title='Topics'/>
+		</View>
 	  <Text style={globals.WelcomeText}>Welcome {this.state.username ? this.state.username  : null}</Text>
 	  <View style={{
           flex: 1,
@@ -80,10 +91,11 @@ class HomeView extends Component {
 		 <View style={{right: 20,width: 120, height: 50}}>
      <Button  onPress={this.TextChatRedirect} title='Text Chat'/>
    </View>
+  
    <View style={{ left: 20, width: 120, height: 50,}}>
-     <Button  title='Audio Chat'/>
+     <Button onPress={this.AudioChatRedirect} title='Audio Chat'/>
    </View>
-   
+  
    </View>
 		
       </View>
