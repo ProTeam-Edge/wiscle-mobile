@@ -8,7 +8,7 @@ class TextChatView extends Component {
   render() {
     return (
       <View style={globals.container}>
-	  <Text>Text Chat</Text>
+	  <Text>Text Chat</Text> 
       </View>
     );
   }
