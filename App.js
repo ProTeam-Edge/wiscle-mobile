@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {globals} from './styles/globals';
 import LoginView from './components/pages/LoginView';
 import HomeView from './components/pages/HomeView';
+import TextChatView from './components/pages/TextChatView';
 import LoadingIndicator from './components/misc/LoadingIndicator';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -37,6 +38,10 @@ class App extends Component {
 	HomeView () {
 		return  <View><HomeView /></View>
 	}
+	TextChatView () {
+		return  <View><TextChatView /></View>
+	}
+	
 	// Workaround for initialRoutName Issue
 	mainRender(initialRouteName) {
 		console.log(initialRouteName)
@@ -47,6 +52,7 @@ class App extends Component {
 				<Stack.Navigator initialRouteName={initialRouteName}>
 					<Stack.Screen  options={{ headerShown: false }} name="LoginView" component={LoginView} />
 					<Stack.Screen options={{ headerShown: false }} name="HomeView" component={HomeView} />
+					<Stack.Screen options={{ headerShown: false }} name="TextChatView" component={TextChatView} />
 				</Stack.Navigator>
 			</NavigationContainer>
 			);

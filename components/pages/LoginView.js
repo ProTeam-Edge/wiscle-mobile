@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState,Component  } from 'react';
 import APIKit, {setClientToken} from '../api/APIKit';
-import { StyleSheet, Text, TextInput, View, Image, Button, Alert,ImageBackground} from 'react-native';
+import { StyleSheet, Text, TextInput, View, Image, Button, Alert,ImageBackground,BackHandler} from 'react-native';
 import {globals} from '../../styles/globals';
 import {axios} from 'axios';
 import LoadingIndicator from '../../components/misc/LoadingIndicator';
@@ -28,6 +28,24 @@ class LoginView extends Component {
 	ShowAlert = (title,message) => {
 		return Alert.alert(title, message, [{ text: "OK", onPress: () => console.log("OK Pressed") }],{ cancelable: true });
 	}
+	 componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+    }
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+    }
+    handleBackButton() {
+		Alert.alert(
+		"Exit App?",
+		"Are you sure you want to exit app?",[{
+		  text: "Cancel",
+		  onPress: () => console.log("Cancel Pressed"),
+		  style: "cancel"
+		},
+		{ text: "OK", onPress: () => BackHandler.exitApp() }],
+		{ cancelable: false });
+		return true;
+    }
 	//Custom Functions
 	
 	// Check Password Length

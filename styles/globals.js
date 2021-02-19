@@ -13,6 +13,16 @@ const globals = StyleSheet.create({
       resizeMode: 'contain',
       marginBottom: 25,
   },
+  userImage: {
+	  width: 270,
+      height: 260,
+	   marginBottom: 25,
+     
+  },
+  WelcomeText:{
+  marginBottom:20,
+  fontSize: 20,
+  },
   inputs:{
     borderColor: '#ddd',
     borderWidth: 1,
@@ -29,9 +39,10 @@ const globals = StyleSheet.create({
 
     padding: '0 1rem'
   },
-
   loginButton:{
-   
+  },
+   logOutButton:{
+	   marginBottom:15
   },
   errors:{
 	  color:"red",
