@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState,Component  } from 'react';
 import APIKit, {setClientToken} from '../api/APIKit';
-import { StyleSheet, Text, TextInput, View, Image, Button, Alert,ImageBackground,BackHandler} from 'react-native';
+import { StyleSheet, Text, TextInput, View, Image, Button, Alert,ImageBackground,BackHandler,TouchableOpacity} from 'react-native';
 import {globals} from '../../styles/globals';
 import {axios} from 'axios';
 import LoadingIndicator from '../../components/misc/LoadingIndicator';
@@ -153,7 +153,7 @@ class LoginView extends Component {
 	CallHttp = (email, password_field) => {
 		const payload = {email, password_field};
 		this.setState({ LoadingIndicatorShow: true });
-		APIKit.post('/authenticate.php', payload).then(this.onSuccess);
+		APIKit.post('/authenticate.php', payload).then(this.onSuccess).catch(this.onFailure);;
 	}
 	// Ajax Response Handlers
 	onSuccess = ({data}) => {
@@ -191,21 +191,27 @@ class LoginView extends Component {
 	LoginViewHtml() {
 		return <View style={globals.container}>
 				<Image style={globals.logo} source={require('../../assets/logo/logo.png')} />
+				
 				<Text style={globals.errors}>
 				{this.state.responseMessage ? this.state.responseMessage : null} 
 				</Text>
-				<TextInput value={this.state.email}  onChangeText={(email) => this.OnchangeEmail(email)}   style={globals.inputs} placeholder="Email" />
+				<TextInput value={this.state.email}  onChangeText={(email) => this.OnchangeEmail(email)}   style={globals.input} placeholder="Email" />
 				<Text style={globals.errors}>
 					{this.state.emailEmpty ? " Email is a required field." : null}
 					{this.state.invalidEmail ? " Email is invalid." : null}
 				</Text>
-				<TextInput value={this.state.password_field} secureTextEntry={true} onChangeText={(password_field) => this.OnChangePassword(password_field)}  style={globals.inputs} 
+				<TextInput value={this.state.password_field} secureTextEntry={true} onChangeText={(password_field) => this.OnChangePassword(password_field)}  style={globals.input} 
 				placeholder="Password"/>  
 				<Text style={globals.errors}>
 					{this.state.passwordEmpty ? " Password is a required field." : null}
 					{this.state.invalidPassword ? " Password must be 8 characters long." : null}
 				</Text>
-				<Button onPress={this.formsubmission} style={globals.loginButton} type="submit"title="Login"/>
+				  <TouchableOpacity
+      onPress={this.formsubmission} 
+        style={globals.loginButton}>
+        <Text style={globals.buttonText}>Login</Text>
+      </TouchableOpacity>
+				
 			</View>
 	}
  	// Render View

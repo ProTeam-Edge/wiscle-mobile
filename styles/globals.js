@@ -19,15 +19,37 @@ const globals = StyleSheet.create({
 	   marginBottom: 25,
      
   },
+   buttonText: {
+    fontSize: 17,
+    color: "#fff",
+  },
+   button: {
+    width: 280,
+    height: 50,
+    backgroundColor: "#55acee",
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   WelcomeText:{
   marginBottom:20,
   fontSize: 20,
+  },
+  input: {
+    width: 280,
+    height: 50,
+    padding: 12,
+    fontSize: 16,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor:"#3e3e3e",
+    marginTop: 32,
+    marginBottom: 5,
   },
   inputs:{
     borderColor: '#ddd',
     borderWidth: 1,
     borderRadius: 5,
-	
 	 width: '50%',
     alignItems: 'center',
     justifyContent: 'center',
@@ -40,13 +62,25 @@ const globals = StyleSheet.create({
     padding: '0 1rem'
   },
   loginButton:{
+	   width: 280,
+    height: 50,
+    backgroundColor: "#55acee",
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+	 marginTop: 32,
   },
    logOutButton:{
 	   marginBottom:15
   },
   errors:{
 	  color:"red",
-	  marginBottom:10
+	
+  },
+  titleText: {
+    fontSize: 20,
+    fontWeight: '700',
+    color:  '#E0434C',
   },
 })
 
