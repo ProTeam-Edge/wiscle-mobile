@@ -2,13 +2,17 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState,Component  } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {globals} from './styles/globals';
-import LoginView from './components/pages/LoginView';
-import HomeView from './components/pages/HomeView';
-import TextChatView from './components/pages/TextChatView';
-import AudioChatView from './components/pages/AudioChatView';
-import TopicsView from './components/pages/TopicsView';
-import LoadingIndicator from './components/misc/LoadingIndicator';
+import {globals} from './theme/globals';
+import LoginView from './screens/login/login';
+import HomeView from './screens/home/home';
+import FlashMessage from 'react-native-flash-message';
+import {TextChatView} from './screens/text-chat/text-chat';
+import AudioChatView from './screens/audio-chat/audio-chat';
+import {ChatRoomScreen} from './screens/chat-room-screen/chat-room-screen';
+import {ChatCreateScreen} from './screens/chat-create-screen/chat-create-screen';
+import TopicsView from './screens/topics/topics';
+import LoadingIndicator from './misc/LoadingIndicator';
+import { AppProvider } from './app-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator();
@@ -55,13 +59,18 @@ class App extends Component {
 		 if (initialRouteName !== null) {
 			 return (
 			<NavigationContainer >
+			 <AppProvider>
 				<Stack.Navigator initialRouteName={initialRouteName}>
 					<Stack.Screen  options={{ headerShown: false }} name="LoginView" component={LoginView} />
 					<Stack.Screen options={{ headerShown: false }} name="HomeView" component={HomeView} />
-					<Stack.Screen name="TextChatView" component={TextChatView} />
-					<Stack.Screen name="AudioChatView" component={AudioChatView} />
-					<Stack.Screen name="TopicsView" component={TopicsView} />
+					<Stack.Screen name="TextChatView" options={{  headerTitle: "Text Chat" }}  component={TextChatView} />
+					<Stack.Screen name="AudioChatView" options={{  headerTitle: "Audio Chat" }}   component={AudioChatView} />
+					<Stack.Screen name="TopicsView" options={{  headerTitle: "Topics" }}    component={TopicsView} />
+					<Stack.Screen name="ChatRoomScreen" options={{  headerTitle: "Chatroom" }}  component={ChatRoomScreen} />
+					<Stack.Screen name="ChatCreateScreen" options={{  headerTitle: "Create Chatroom" }} component={ChatCreateScreen} />
 				</Stack.Navigator>
+				  <FlashMessage position="bottom" />
+			</AppProvider>
 			</NavigationContainer>
 			);
 		 }

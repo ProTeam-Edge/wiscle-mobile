@@ -1,10 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState,Component  } from 'react';
-import APIKit, {setClientToken} from '../api/APIKit';
+import APIKit, {setClientToken} from '../../services/APIKit';
 import { StyleSheet, Text, TextInput, View, Image, Button, Alert,ImageBackground,BackHandler,TouchableOpacity} from 'react-native';
-import {globals} from '../../styles/globals';
+import {globals} from '../../theme/globals';
 import {axios} from 'axios';
-import LoadingIndicator from '../../components/misc/LoadingIndicator';
+import LoadingIndicator from '../../misc/LoadingIndicator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 const image = { uri: "https://reactjs.org/logo-og.png" };
@@ -153,7 +153,7 @@ class LoginView extends Component {
 	CallHttp = (email, password_field) => {
 		const payload = {email, password_field};
 		this.setState({ LoadingIndicatorShow: true });
-		APIKit.post('/authenticate.php', payload).then(this.onSuccess).catch(this.onFailure);;
+		APIKit.post('authenticate.php', payload).then(this.onSuccess).catch(this.onFailure);
 	}
 	// Ajax Response Handlers
 	onSuccess = ({data}) => {
@@ -168,8 +168,9 @@ class LoginView extends Component {
 		else {
 		this.EmptyFields();
 		this.setState({ responseMessage:data.message });
+		
 		AsyncStorage.setItem("isLoggedIn", '1');
-		AsyncStorage.setItem("ID", data.data.ID);
+		AsyncStorage.setItem("uid", data.data.ID);
 		AsyncStorage.setItem("username", data.data.username);
 		AsyncStorage.setItem("email", data.data.email);
 		AsyncStorage.setItem("token", data.data.token);

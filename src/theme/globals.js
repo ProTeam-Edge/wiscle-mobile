@@ -1,6 +1,7 @@
 import {StyleSheet} from 'react-native'
 
 const globals = StyleSheet.create({
+	
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -14,9 +15,9 @@ const globals = StyleSheet.create({
       marginBottom: 25,
   },
   userImage: {
-	  width: 270,
-      height: 260,
-	   marginBottom: 25,
+	  width: 220,
+      height: 210,
+	 
      
   },
    buttonText: {
@@ -70,6 +71,16 @@ const globals = StyleSheet.create({
     justifyContent: 'center',
 	 marginTop: 32,
   },
+   normalButton:{
+	   width: 120,
+    height: 50,
+    backgroundColor: "#55acee",
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+	 marginTop: 10,
+  },
+  
    logOutButton:{
 	   marginBottom:15
   },
@@ -82,6 +93,8 @@ const globals = StyleSheet.create({
     fontWeight: '700',
     color:  '#E0434C',
   },
+
+
 })
 
 export {globals}

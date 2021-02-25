@@ -1,17 +1,17 @@
 import React, { Component,useState } from "react";
 import {StyleSheet, Text, TextInput, View, Image, Button, Alert,BackHandler } from "react-native";
-import {globals} from '../../styles/globals';
+import {globals} from '../../theme/globals';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
-class TextChatView extends Component {
+class AudioChatView extends Component {
 	
   render() {
     return (
       <View style={globals.container}>
-	  <Text>Text Chat</Text> 
+	  <Text>Audio Chat</Text> 
       </View>
     );
   }
 }
 
-export default TextChatView;
+export default AudioChatView;

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { ActivityIndicator, StyleSheet, Text, View ,Image} from "react-native";
-import {globals} from '../../styles/globals';
+import {globals} from '../theme/globals';
 class LoadingIndicator extends Component {
   render() {
     return (
     <View style={globals.container}>
-		<Image style={globals.logo} source={require('../../assets/logo/logo.png')} />
+		<Image style={globals.logo} source={require('../assets/logo/logo.png')} />
 
         <ActivityIndicator  size="large" color="#0000ff" />
    
