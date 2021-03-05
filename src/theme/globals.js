@@ -1,13 +1,65 @@
 import {StyleSheet} from 'react-native'
 
 const globals = StyleSheet.create({
+	textViewContainer: {
 	
+  textAlignVertical:'center',
+  width:'50%', 
+  padding:20
+ 
+},
+imageViewContainer: {
+width: '50%',
+height: 100 ,
+margin: 10,
+borderRadius : 10
+ 
+},
+MainContainer :{
+ 
+// Setting up View inside content in Vertically center.
+justifyContent: 'center',
+flex:1,
+margin: 5,
+
+ 
+},
+Heading:{
+    fontSize: 20,
+  },
+  Padding10: {
+	  padding:20,
+  },
+  Bottom10:{
+	  marginBottom:10,
+  },
+  Bottom20:{
+	  marginBottom:20,
+  },
+  Top10:{
+	  marginTop:10,
+  },
+   Left10:{
+	  marginLeft:10,
+  },
+  Left20:{
+	  marginLeft:20,
+  },
+  Top20:{
+	  marginTop:20,
+  },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+	
+	   backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
    },
+     item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+  },
   logo: {
       width: 270,
       height: 60,
@@ -86,7 +138,7 @@ const globals = StyleSheet.create({
   },
   errors:{
 	  color:"red",
-	
+
   },
   titleText: {
     fontSize: 20,

@@ -2,19 +2,20 @@ import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { showMessage } from 'react-native-flash-message';
-
+import { Container, Header, Content, List, Text,ListItem, Left, Body,Title, Right, Thumbnail,Button, Footer, FooterTab,Icon  } from 'native-base';   
 import { colors } from '../../theme';
 import { TwilioService } from '../../services/twilio-service';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import ChatLoader  from '../../misc/LoadingIndicator';
-export function ChatRoomScreen({ route }) {
-  const { channelId, identity } = route.params;
+export function ChatRoomScreen({ navigation, route }) {
+	
+  const { channelId, identity,connection_name } = route.params;
 
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const chatClientChannel = useRef();
   const chatMessagesPaginator = useRef();
-	
+
   const setChannelEvents = useCallback((channel) => {
     chatClientChannel.current = channel;
     chatClientChannel.current.on('messageAdded', (message) => {
@@ -31,7 +32,17 @@ export function ChatRoomScreen({ route }) {
     });
     return chatClientChannel.current;
   }, []);
+  
+  const movetoHome = () => { 
+		
+		navigation.navigate('HomeView');
+	}
+const clearSession = () => { 
+		console.log('triggered');
+		AsyncStorage.clear();
 
+		navigation.navigate('LoginView');
+	}
   useEffect(() => {
 
     TwilioService.getInstance()
@@ -54,21 +65,48 @@ export function ChatRoomScreen({ route }) {
     chatClientChannel.current?.sendMessage(newMessages[0].text, attributes);
   }, []);
 
-  return (
-    <View style={styles.screen}>
+  return  <Container >
+   <Header>
+          <Left>    
+		  <Button onPress={movetoHome} transparent>
+              <Icon name='arrow-back' />
+            </Button>
+			</Left>
+          <Body>
+            <Title>{connection_name}</Title>
+          </Body>
+          <Right />
+        </Header>
+		<Content contentContainerStyle={{flex: 1}} style={{padding: 10}}>
+ 
       {loading ? (
         <ChatLoader />
       ) : (
         <GiftedChat
           messagesContainerStyle={styles.messageContainer}
           messages={messages}
-          renderAvatarOnTop
+	  renderAvatar={null}
           onSend={(messages) => onSend(messages)}
           user={{ _id: identity }}
         />
       )}
-    </View>
-  );
+
+	</Content>
+	  <Footer>
+          <FooterTab>
+            <Button vertical>
+              <Icon onPress={movetoHome} type="FontAwesome" name="home" />
+              <Text>Home</Text>
+            </Button>
+        
+            <Button onPress={clearSession} vertical>
+               <Icon type="FontAwesome" name="power-off" />
+              <Text>Logout</Text>
+            </Button>
+          </FooterTab>
+        </Footer>
+	 </Container >
+
 }
 
 const styles = StyleSheet.create({

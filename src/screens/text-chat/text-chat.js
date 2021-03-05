@@ -5,7 +5,7 @@ import { showMessage } from 'react-native-flash-message';
 import { colors } from '../../theme';
 import { TwilioService } from '../../services/twilio-service';
 import { getToken } from '../../services/api-service';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useApp } from '../../app-context';
 
 import ChatListLoader  from '../../misc/LoadingIndicator';
@@ -15,7 +15,14 @@ import { ChatListEmpty } from './components/chat-list-empty';
 import { ChatListItem } from './components/chat-list-item';
 
 export function TextChatView({ navigation, route }) {
+
   const { username } = route.params;
+  const { channel_id } = route.params;
+  const { connection_name } = route.params;
+
+	
+ 
+
   const [loading, setLoading] = useState(true);
   const { channels, updateChannels } = useApp();
   const channelPaginator = useRef();
@@ -41,6 +48,7 @@ export function TextChatView({ navigation, route }) {
   }, [navigation]);
 
   const setChannelEvents = useCallback(
+
     (client) => {
       client.on('messageAdded', (message) => {
         updateChannels((prevChannels) =>
@@ -67,13 +75,14 @@ export function TextChatView({ navigation, route }) {
   );
 
   useEffect(() => {
+	
     getToken(username)
       .then((token) => TwilioService.getInstance().getChatClient(token))
       .then(() => TwilioService.getInstance().addTokenListener(getToken))
       .then(setChannelEvents)
       .then(getSubscribedChannels)
-      .catch((err) => showMessage({ message: err.message, type: 'danger' }))
-      .finally(() => setLoading(false));
+      .catch((err) => alert('error'))
+      .finally(() => navigation.navigate('ChatRoomScreen', { channelId:channel_id,identity:username,connection_name:connection_name }));
 
     return () => TwilioService.getInstance().clientShutdown();
   }, [username, setChannelEvents, getSubscribedChannels]);
@@ -86,25 +95,12 @@ export function TextChatView({ navigation, route }) {
   return (
     <View style={styles.screen}>
 
-           <TouchableOpacity onPress={() => ChatCreateScreen()}>
-        <Text >Create</Text>
-      </TouchableOpacity>
        
       {loading ? (
         <ChatListLoader />
       ) : (
 	  
-        <FlatList
-          data={sortedChannels}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <ChatListItem
-              channel={item}
-              onPress={() =>  ChatRoomScreenRedirect({channelId: item.id, identity: username})}
-            />
-          )}
-          ListEmptyComponent={<ChatListEmpty />}
-        />
+       <Text>Test</Text>
       )}
 	 
     </View>

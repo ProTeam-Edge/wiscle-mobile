@@ -1,4 +1,4 @@
-import { StatusBar } from 'expo-status-bar';
+
 import React, { useState,Component  } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -8,6 +8,8 @@ import HomeView from './screens/home/home';
 import FlashMessage from 'react-native-flash-message';
 import {TextChatView} from './screens/text-chat/text-chat';
 import AudioChatView from './screens/audio-chat/audio-chat';
+import PersonalDetailsEdit from './screens/personal/personal-details-edit';
+import PersonalDetailsView from './screens/personal/personal-details-view';
 import {ChatRoomScreen} from './screens/chat-room-screen/chat-room-screen';
 import {ChatCreateScreen} from './screens/chat-create-screen/chat-create-screen';
 import TopicsView from './screens/topics/topics';
@@ -63,11 +65,14 @@ class App extends Component {
 				<Stack.Navigator initialRouteName={initialRouteName}>
 					<Stack.Screen  options={{ headerShown: false }} name="LoginView" component={LoginView} />
 					<Stack.Screen options={{ headerShown: false }} name="HomeView" component={HomeView} />
-					<Stack.Screen name="TextChatView" options={{  headerTitle: "Text Chat" }}  component={TextChatView} />
-					<Stack.Screen name="AudioChatView" options={{  headerTitle: "Audio Chat" }}   component={AudioChatView} />
+					<Stack.Screen options={{ headerShown: false }} name="TextChatView"  component={TextChatView} />
+					<Stack.Screen  name="AudioChatView" options={{  headerTitle: "Audio Chat" }}   component={AudioChatView} />
 					<Stack.Screen name="TopicsView" options={{  headerTitle: "Topics" }}    component={TopicsView} />
-					<Stack.Screen name="ChatRoomScreen" options={{  headerTitle: "Chatroom" }}  component={ChatRoomScreen} />
+					<Stack.Screen options={{ headerShown: false }}  name="ChatRoomScreen"  component={ChatRoomScreen} />
 					<Stack.Screen name="ChatCreateScreen" options={{  headerTitle: "Create Chatroom" }} component={ChatCreateScreen} />
+					<Stack.Screen name="PersonalDetailsEdit" options={{ headerShown: false }}  component={PersonalDetailsEdit} />
+					<Stack.Screen name="PersonalDetailsView" options={{ headerShown: false }}  component={PersonalDetailsView} />
+					
 				</Stack.Navigator>
 				  <FlashMessage position="bottom" />
 			</AppProvider>

@@ -1,10 +1,14 @@
-import { StatusBar } from 'expo-status-bar';
+
 import React, { useState,Component  } from 'react';
 import APIKit, {setClientToken} from '../../services/APIKit';
-import { StyleSheet, Text, TextInput, View, Image, Button, Alert,ImageBackground,BackHandler,TouchableOpacity} from 'react-native';
+import { StyleSheet, TextInput, View, Image,  Alert,ImageBackground,BackHandler,TouchableOpacity} from 'react-native';
 import {globals} from '../../theme/globals';
 import {axios} from 'axios';
+import {Notifications} from 'twilio-notifications';
 import LoadingIndicator from '../../misc/LoadingIndicator';
+import { Container, Header, Content, Form, Item, Input, Label,Text,Button,Icon } from 'native-base';
+/* import { TokenSubmission } from '../../services/TokenSubmission'; */
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 const image = { uri: "https://reactjs.org/logo-og.png" };
@@ -160,22 +164,26 @@ class LoginView extends Component {
 		console.log(data);
 		console.log('response success');
 		const { navigate } = this.props.navigation;
-		this.setState({ LoadingIndicatorShow: false });
+		
 		if(data.success==0) {
+			this.setState({ LoadingIndicatorShow: false })
 			this.setState({ responseMessage:data.message });
-			 this.ShowAlert('Response',data.message);
+			//this.ShowAlert('Response',data.message);
 		}
 		else {
+		
 		this.EmptyFields();
 		this.setState({ responseMessage:data.message });
-		
+	
 		AsyncStorage.setItem("isLoggedIn", '1');
 		AsyncStorage.setItem("uid", data.data.ID);
 		AsyncStorage.setItem("username", data.data.username);
 		AsyncStorage.setItem("email", data.data.email);
 		AsyncStorage.setItem("token", data.data.token);
-		this.ShowAlert('Response',data.message);
+		AsyncStorage.setItem("channel_id", data.data.channel_id);
+		//this.ShowAlert('Response',data.message);
 		this.EmptyVariables();
+		/* TokenSubmission( data.data.ID).then(navigate('HomeView')); */
 		navigate('HomeView');
 		}
      
@@ -190,30 +198,40 @@ class LoginView extends Component {
 	
 	// Template Part Login
 	LoginViewHtml() {
-		return <View style={globals.container}>
+		return <Container contentContainerStyle={{flex: 1}} style={{padding: 50}}>
+		<Content >
 				<Image style={globals.logo} source={require('../../assets/logo/logo.png')} />
 				
-				<Text style={globals.errors}>
-				{this.state.responseMessage ? this.state.responseMessage : null} 
-				</Text>
-				<TextInput value={this.state.email}  onChangeText={(email) => this.OnchangeEmail(email)}   style={globals.input} placeholder="Email" />
-				<Text style={globals.errors}>
+				 <Item floatingLabel >
+              <Label>Email</Label>
+              <Input value={this.state.email}  onChangeText={(email) => this.OnchangeEmail(email)}   />
+            </Item>
+			<Text style={globals.errors}>
 					{this.state.emailEmpty ? " Email is a required field." : null}
 					{this.state.invalidEmail ? " Email is invalid." : null}
 				</Text>
-				<TextInput value={this.state.password_field} secureTextEntry={true} onChangeText={(password_field) => this.OnChangePassword(password_field)}  style={globals.input} 
-				placeholder="Password"/>  
+				
+			
+				<Item floatingLabel>
+              <Label>Password</Label>
+              <Input value={this.state.password_field} secureTextEntry={true} onChangeText={(password_field) => this.OnChangePassword(password_field)}   />
+            </Item>
 				<Text style={globals.errors}>
 					{this.state.passwordEmpty ? " Password is a required field." : null}
 					{this.state.invalidPassword ? " Password must be 8 characters long." : null}
 				</Text>
-				  <TouchableOpacity
-      onPress={this.formsubmission} 
-        style={globals.loginButton}>
-        <Text style={globals.buttonText}>Login</Text>
-      </TouchableOpacity>
+				<Text style={globals.errors}>
+				{this.state.responseMessage ? this.state.responseMessage : null} 
+				</Text>
+		  <Button  style={globals.Top20} onPress={this.formsubmission} >
+		   <Icon type="FontAwesome" name="sign-in" />
+            <Text>Login</Text>
+          </Button>
 				
-			</View>
+				
+	</Content> 
+			</Container >
+    
 	}
  	// Render View
 	render() {
